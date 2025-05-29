@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CodeProcessorComponent } from './code-processor/code-processor.component';
+import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CodeProcessorComponent, HttpClientModule],
-  template: '<app-code-processor></app-code-processor>',
+  imports: [RouterOutlet, HttpClientModule],
+  template: '<router-outlet></router-outlet>',
 })
 export class AppComponent {}

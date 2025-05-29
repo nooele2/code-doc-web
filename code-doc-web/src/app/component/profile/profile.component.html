@@ -1,0 +1,112 @@
+<div class="relative inline-block text-left">
+  <!-- Profile Icon -->
+  <div (click)="toggleMenu()" class="cursor-pointer text-3xl text-primaryText hover:text-highlight">
+    <i class="fas fa-user-circle"></i>
+  </div>
+
+  <!-- Dropdown Menu -->
+  <div
+    *ngIf="menuVisible"
+    class="origin-top-right absolute right-0 mt-2 w-40 rounded-xl shadow-lg bg-surface ring-1 ring-border focus:outline-none z-50"
+  >
+    <ul class="divide-y divide-border">
+      <li
+        *ngFor="let menuItem of menuItems; let i = index"
+        (click)="onMenuClick(menuItem)"
+        class="flex items-center gap-2 px-3 py-2 text-sm text-primaryText transition cursor-pointer hover:bg-highlight hover:text-white"
+        [ngClass]="{
+          'rounded-t-xl': i === 0,
+          'rounded-b-xl': i === menuItems.length - 1
+        }"
+      >
+        <i [class]="menuItem.icon"></i>
+        {{ menuItem.label }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Profile Modal -->
+  <div
+    *ngIf="isProfileModalVisible"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-surface rounded-2xl p-6 w-96 max-w-full shadow-lg relative">
+      <h2 class="text-xl font-semibold mb-4 text-highlight">Profile</h2>
+      <form (ngSubmit)="saveProfile()" #profileForm="ngForm" class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-primaryText mb-1">Username</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            [(ngModel)]="userProfile.name"
+            required
+            class="w-full bg-input text-primaryText rounded-md border border-border p-2 focus:outline-none focus:ring-2 focus:ring-highlight"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-primaryText mb-1">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [(ngModel)]="userProfile.email"
+            disabled
+            class="w-full bg-input text-primaryText rounded-md border border-border p-2 cursor-not-allowed"
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-primaryText mb-1">New Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="userProfile.password"
+            placeholder="New Password"
+            class="w-full bg-input text-primaryText rounded-md border border-border p-2 focus:outline-none focus:ring-2 focus:ring-highlight"
+          />
+        </div>
+
+        <div class="flex justify-end space-x-4 pt-4 border-t border-border">
+          <button
+            type="button"
+            (click)="closeProfileModal()"
+            class="px-4 py-2 rounded-md bg-border text-primaryText hover:bg-highlight hover:text-white transition"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            [disabled]="profileForm.invalid"
+            class="px-4 py-2 rounded-md bg-highlight text-white font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div
+    *ngIf="isSettingsModalVisible"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-surface rounded-2xl p-6 w-96 max-w-full shadow-lg relative overflow-auto max-h-[80vh]">
+      <h2 class="text-xl font-semibold mb-4 text-highlight">Privacy and Policy</h2>
+      <div class="prose prose-invert max-w-none overflow-auto" style="max-height: 60vh;">
+        <!-- Your privacy content here -->
+      </div>
+
+      <button
+        type="button"
+        (click)="closeSettingsModal()"
+        class="mt-6 px-4 py-2 rounded-md bg-highlight text-white hover:bg-blue-700 transition"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

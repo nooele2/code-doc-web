@@ -12,14 +12,8 @@
     <!-- Top Navbar -->
     <div class="flex justify-end items-center p-4 border-b border-border bg-surface shadow-sm">
       <div class="relative">
-        <button class="flex items-center gap-2 focus:outline-none group">
-          <img src="/assets/user-avatar.png" alt="User Avatar" class="w-8 h-8 rounded-full border border-secondaryText" />
-          <span class="text-sm text-secondaryText">Username</span>
-        </button>
-        <div class="absolute right-0 mt-2 w-48 bg-code border border-border rounded-lg shadow-lg py-2 z-10 transition-all">
-          <a href="#" class="block px-4 py-2 text-sm hover:bg-input rounded">⚙️ Settings</a>
-          <a href="#" class="block px-4 py-2 text-sm hover:bg-input rounded">🧩 Get Extension</a>
-          <a href="#" class="block px-4 py-2 text-sm hover:bg-input rounded">🔓 Logout</a>
+        <div class="relative">
+          <app-profile></app-profile>
         </div>
       </div>
     </div>

@@ -1,0 +1,74 @@
+<div class="flex h-screen bg-background text-primaryText font-[JetBrains Mono,monospace]">
+  <!-- Left Info Section -->
+  <aside class="hidden lg:flex flex-col justify-center items-start w-1/2 bg-surface border-r border-border p-12 shadow-md">
+    <h2 class="text-4xl font-bold text-highlight leading-snug mb-4">
+      Welcome to<br>Athena
+    </h2>
+    <div class="h-px bg-border w-full my-4"></div>
+    <p class="text-secondaryText text-sm">
+      If you don’t have an account,<br>
+      you can <a class="text-highlight hover:underline" href="/sign-up">sign up here</a>.
+    </p>
+    <img src="/imgs/signup-login-ui.png" alt="Login Illustration" class="mt-10 w-full max-w-md rounded-xl shadow-lg" />
+  </aside>
+
+  <!-- Login Form Section -->
+  <main class="flex-1 flex items-center justify-center bg-background p-6">
+    <div class="bg-surface border border-border rounded-2xl p-8 shadow-lg w-full max-w-md">
+      <h2 class="text-3xl font-bold text-highlight text-center mb-6">Login</h2>
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="space-y-6">
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-xs font-semibold text-secondaryText mb-1">Email</label>
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Enter your email here"
+              required
+              class="w-full bg-input text-sm text-primaryText border border-border rounded-md p-3 pl-10 focus:outline-none focus:ring-1 focus:ring-highlight"
+            />
+            <img src="/imgs/email.png" alt="email icon" class="w-5 h-5 absolute left-3 top-3.5" />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-xs font-semibold text-secondaryText mb-1">Password</label>
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+              required
+              class="w-full bg-input text-sm text-primaryText border border-border rounded-md p-3 pl-10 focus:outline-none focus:ring-1 focus:ring-highlight"
+            />
+            <img src="/imgs/password.png" alt="password icon" class="w-5 h-5 absolute left-3 top-3.5" />
+          </div>
+        </div>
+
+        <!-- Remember Me -->
+        <div class="flex items-center space-x-2 text-sm text-secondaryText">
+          <input type="checkbox" id="rememberMe" name="rememberMe" class="accent-highlight" />
+          <label for="rememberMe">Remember me</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="w-full bg-highlight text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 hover:shadow-md transition-all disabled:opacity-50"
+        >
+          Login
+        </button>
+
+        <!-- Error Message -->
+        <p *ngIf="errorMessage" class="text-red-400 text-sm text-center">{{ errorMessage }}</p>
+      </form>
+    </div>
+  </main>
+</div>

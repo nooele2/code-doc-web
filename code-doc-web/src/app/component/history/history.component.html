@@ -1,0 +1,53 @@
+<div class="p-4 space-y-4">
+  <h2 class="text-lg font-bold text-highlight">📚 History</h2>
+  <ul class="space-y-2">
+    <li
+      *ngFor="let item of history; let i = index"
+      class="relative bg-input border border-border p-2 rounded-md text-sm group"
+    >
+      <!-- Editable name or default -->
+      <div
+        class="cursor-pointer hover:text-highlight transition"
+        (click)="onSelect(item)"
+      >
+        <ng-container *ngIf="!item.editing">{{ item.name || ('Snippet ' + (i + 1)) }}</ng-container>
+        <input
+          *ngIf="item.editing"
+          [(ngModel)]="item.name"
+          (blur)="item.editing = false"
+          (keydown.enter)="item.editing = false"
+          class="bg-background text-primaryText border border-border rounded px-2 py-1 text-sm w-full"
+          placeholder="Enter new name"
+          autofocus
+        />
+      </div>
+
+      <!-- Three Dots Button -->
+      <button
+        class="absolute top-2 right-2 text-secondaryText hover:text-highlight focus:outline-none"
+        (click)="toggleMenu(i)"
+      >
+        ⋮
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div
+        *ngIf="dropdownIndex === i"
+        class="absolute right-2 top-8 bg-surface border border-border rounded shadow-md z-10 w-28"
+      >
+        <button
+          class="w-full text-left px-4 py-2 hover:bg-highlight hover:text-white text-sm"
+          (click)="renameItem(i)"
+        >
+          📝 Rename
+        </button>
+        <button
+          class="w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white text-sm"
+          (click)="deleteItem(i)"
+        >
+          ❌ Delete
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>

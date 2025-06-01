@@ -1,21 +1,38 @@
 <div class="flex h-screen bg-background text-primaryText font-[JetBrains Mono,monospace]">
-  <!-- Left Sidebar -->
-  <aside class="w-64 bg-surface border-r border-border p-4 space-y-6 shadow-md">
-    <div class="text-xl font-bold text-highlight">🧠 SmartCode AI</div>
-    <nav class="space-y-3 mt-8">
-      <a class="block hover:text-white transition" routerLink="/history">🕒 History</a>
-    </nav>
+  <!-- History Sidebar -->
+  <aside
+    class="relative bg-surface border-r border-border shadow-md transition-all duration-300 ease-in-out"
+    [class.w-64]="showHistory"
+    [class.w-0]="!showHistory"
+    [class.opacity-100]="showHistory"
+    [class.opacity-0]="!showHistory"
+    [class.pointer-events-none]="!showHistory"
+  >
+    <button
+      (click)="toggleHistory()"
+      class="absolute top-5 right-4 text-highlight hover:text-white transition"
+      aria-label="Close sidebar"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <app-history
+      *ngIf="showHistory"
+      [history]="history"
+      (selectItem)="loadFromHistory($event)"
+    ></app-history>
   </aside>
 
   <!-- Main Content Area -->
   <main class="flex-1 flex flex-col overflow-y-auto">
     <!-- Top Navbar -->
-    <div class="flex justify-end items-center p-4 border-b border-border bg-surface shadow-sm">
-      <div class="relative">
-        <div class="relative">
-          <app-profile></app-profile>
-        </div>
+    <div class="flex justify-between items-center p-4 border-b border-border bg-surface shadow-sm">
+      <div>
+        <button *ngIf="!showHistory" (click)="toggleHistory()" class="text-highlight text-2xl hover:text-white transition">
+          <i class="fas fa-bars"></i>
+        </button>
       </div>
+      <app-profile></app-profile>
     </div>
 
     <!-- Content Section -->
@@ -23,10 +40,55 @@
       <!-- Input Form -->
       <form (ngSubmit)="onSubmit()" class="space-y-6 bg-surface rounded-2xl p-6 shadow-lg border border-border">
         <div>
-          <label class="block text-xs font-semibold text-secondaryText mb-1">Documentation File</label>
-          <input type="file" id="documentationFile" (change)="onFileSelected($event)" required
-            class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2 focus:outline-none focus:ring focus:ring-highlight" />
-        </div>
+  <!-- Section Title -->
+  <label class="block text-xs font-semibold text-secondaryText mb-2">Documentation File</label>
+
+  <!-- Hidden native file input (moved outside the flex container) -->
+  <input
+    *ngIf="useDefaultDoc"
+    type="file"
+    id="documentationFile"
+    (change)="onFileSelected($event)"
+    class="hidden"
+  />
+
+  <!-- Choose File button with file name display -->
+  <div *ngIf="useDefaultDoc" class="flex items-center space-x-3 mb-3">
+    <label
+      for="documentationFile"
+      class="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-1.5 px-3 rounded-md transition duration-200"
+    >
+      Upload File
+    </label>
+    <div
+      class="flex-1 min-w-0 bg-input text-primaryText border border-border text-sm rounded-md px-3 py-1.5 truncate"
+    >
+      No file chosen
+    </div>
+  </div>
+
+  <!-- Delete File button with file name display -->
+  <div *ngIf="!useDefaultDoc" class="flex items-center space-x-3 mb-3">
+    <button
+      type="button"
+      (click)="deleteFile()"
+      class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-1.5 px-3 rounded-md transition duration-200"
+    >
+      Delete File
+    </button>
+    <div
+      class="flex-1 min-w-0 bg-input text-primaryText border border-border text-sm rounded-md px-3 py-1.5 truncate"
+    >
+      {{ documentationFile?.name }}
+    </div>
+  </div>
+
+  <!-- Info Text -->
+  <div *ngIf="useDefaultDoc" class="text-sm text-secondaryText italic">
+    Using default documentation file.
+  </div>
+</div>
+
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -40,6 +102,8 @@
             <select id="apiKeyType" [(ngModel)]="apiKeyType" name="apiKeyType"
               class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2">
               <option value="OpenAI">OpenAI</option>
+              <option value="Gemini">Gemini</option>
+            <option value="DeepSeek">DeepSeek</option>
             </select>
           </div>
 
@@ -88,7 +152,6 @@
 
           <h3 class="text-sm font-bold text-highlight mb-3 mt-6">Explanation</h3>
           <pre class="whitespace-pre-wrap text-sm text-codeText bg-code p-4 rounded-md overflow-auto leading-relaxed shadow-inner fade-in">
-            {{ result }}
           </pre>
         </div>
       </div>

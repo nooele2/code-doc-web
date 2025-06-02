@@ -143,18 +143,15 @@
       </form>
 
       <!-- Output Section -->
-      <div class="flex flex-col space-y-4">
-        <div class="bg-surface border border-border p-4 rounded-2xl shadow-md">
-          <h3 class="text-sm font-bold text-highlight mb-3">🧾 Modified Code:</h3>
-          <pre class="whitespace-pre-wrap text-sm text-codeText bg-code p-4 rounded-md overflow-auto leading-relaxed shadow-inner fade-in">
-            {{ result }}
-          </pre>
+      <div class="bg-surface border border-border p-6 rounded-2xl shadow-md">
+  <h3 class="text-sm font-bold text-highlight mb-1">🧾 Modified Code:</h3>
+  <pre
+    class="whitespace-pre-wrap text-sm text-codeText bg-code p-4 border border-border rounded-md overflow-auto leading-relaxed shadow-inner fade-in h-[650px]"
+  >
+    {{ result }}
+  </pre>
+</div>
 
-          <h3 class="text-sm font-bold text-highlight mb-3 mt-6">Explanation</h3>
-          <pre class="whitespace-pre-wrap text-sm text-codeText bg-code p-4 rounded-md overflow-auto leading-relaxed shadow-inner fade-in">
-          </pre>
-        </div>
-      </div>
     </div>
   </main>
 </div>

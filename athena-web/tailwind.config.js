@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         background: '#2b2d31',
         surface: '#323438',
-        border: '#4b4b4b',       
+        border: '#4b4b4b',
         input: '#3a3d41',
         code: '#282c34',
         primaryText: '#f0f0f0',

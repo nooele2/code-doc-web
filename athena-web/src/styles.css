@@ -3,3 +3,36 @@
 @tailwind utilities;
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
+@layer base {
+  /* Light Theme (default) */
+:root {
+  --background: #f4f5f7;
+  --surface: #fefefe;
+  --border: #dcdcdc;
+  --input: #ebebeb;
+  --code: #efefef;
+  --primary-text: #1a1a1a;
+  --secondary-text: #4a4a4a;
+  --highlight: rgba(0, 0, 0, 0.1);
+  --code-text: #004d4d;
+  --theme: #fac000;
+}
+
+/* Dark Theme */
+.dark {
+  --background: #2b2d31;
+  --surface: #323438;
+  --border: #4b4b4b;
+  --input: #3a3d41;
+  --code: #282c34;
+  --primary-text: #f0f0f0;
+  --secondary-text: #bcbcbc;
+  --highlight: rgba(255, 255, 255, 0.1);
+  --code-text: #00ffaa;
+  --theme: #1b1c1e;
+}
+
+}
+
+
+

@@ -1,7 +1,7 @@
 <div class="flex h-screen bg-background text-primaryText font-[JetBrains Mono,monospace]">
   <!-- History Sidebar -->
   <aside
-    class="relative bg-surface border-r border-border shadow-md transition-all duration-300 ease-in-out"
+    class="fixed sm:relative top-0 left-0 h-full z-40 bg-surface border-r border-border shadow-md transition-all duration-300 ease-in-out"
     [class.w-64]="showHistory"
     [class.w-0]="!showHistory"
     [class.opacity-100]="showHistory"
@@ -10,10 +10,13 @@
   >
     <button
       (click)="toggleHistory()"
-      class="absolute top-5 right-4 text-highlight hover:text-white transition"
+      class="absolute top-5 right-4 text-2xl hover:text-white transition"
       aria-label="Close sidebar"
     >
-      <i class="fas fa-bars"></i>
+      <i
+        class="fas fa-bars bg-[length:200%_auto] bg-gradient-primary bg-[position:0%_0] hover:bg-[position:100%_0]
+               transition-all duration-300 ease-in-out bg-clip-text text-transparent"
+      ></i>
     </button>
 
     <app-history
@@ -26,100 +29,166 @@
   <!-- Main Content Area -->
   <main class="flex-1 flex flex-col overflow-y-auto">
     <!-- Top Navbar -->
-    <div class="flex justify-between items-center p-4 border-b border-border bg-surface shadow-sm">
-      <div>
-        <button *ngIf="!showHistory" (click)="toggleHistory()" class="text-highlight text-2xl hover:text-white transition">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+<nav class="w-full px-4 py-3 border-b border-border bg-surface shadow-sm">
+  <div class="flex justify-between items-center">
+
+    <!-- Left side: Menu Button -->
+    <div>
+      <button
+        *ngIf="!showHistory"
+        (click)="toggleHistory()"
+        class="text-2xl transition hover:text-white"
+      >
+        <i
+          class="fas fa-bars
+                 bg-[length:200%_auto]
+                 bg-gradient-primary
+                 bg-[position:0%_0]
+                 hover:bg-[position:100%_0]
+                 transition-all duration-300 ease-in-out
+                 bg-clip-text text-transparent"
+        ></i>
+      </button>
+    </div>
+
+    <!-- Right side: Theme Toggle + Profile -->
+    <div class="flex items-center justify-between space-x-4">
+      <app-theme-toggle></app-theme-toggle>
       <app-profile></app-profile>
     </div>
+
+  </div>
+</nav>
+
 
     <!-- Content Section -->
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 p-6 flex-1 overflow-auto">
       <!-- Input Form -->
-      <form (ngSubmit)="onSubmit()" class="space-y-6 bg-surface rounded-2xl p-6 shadow-lg border border-border">
+      <form
+        (ngSubmit)="onSubmit()"
+        class="space-y-6 bg-surface rounded-2xl p-6 shadow-lg border border-border"
+      >
         <div>
-  <!-- Section Title -->
-  <label class="block text-xs font-semibold text-secondaryText mb-2">Documentation File</label>
+          <label
+            class="block text-xs font-semibold text-secondaryText mb-2"
+          >
+            Documentation File
+          </label>
 
-  <!-- Hidden native file input (moved outside the flex container) -->
-  <input
-    *ngIf="useDefaultDoc"
-    type="file"
-    id="documentationFile"
-    (change)="onFileSelected($event)"
-    class="hidden"
-  />
+          <input
+            *ngIf="useDefaultDoc"
+            type="file"
+            id="documentationFile"
+            (change)="onFileSelected($event)"
+            class="hidden"
+          />
 
-  <!-- Choose File button with file name display -->
-  <div *ngIf="useDefaultDoc" class="flex items-center space-x-3 mb-3">
-    <label
-      for="documentationFile"
-      class="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-1.5 px-3 rounded-md transition duration-200"
-    >
-      Upload File
-    </label>
-    <div
-      class="flex-1 min-w-0 bg-input text-primaryText border border-border text-sm rounded-md px-3 py-1.5 truncate"
-    >
-      No file chosen
-    </div>
-  </div>
+          <div
+            *ngIf="useDefaultDoc"
+            class="flex items-center space-x-3 mb-3"
+          >
+            <label
+              for="documentationFile"
+              class="inline-block cursor-pointer text-white text-sm font-semibold py-1.5 px-3 rounded-md
+                     bg-[length:200%_auto] bg-gradient-primary bg-[position:0%_0] hover:bg-[position:100%_0]
+                     transition-all duration-300 ease-in-out"
+            >
+              Upload File
+            </label>
 
-  <!-- Delete File button with file name display -->
-  <div *ngIf="!useDefaultDoc" class="flex items-center space-x-3 mb-3">
-    <button
-      type="button"
-      (click)="deleteFile()"
-      class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-1.5 px-3 rounded-md transition duration-200"
-    >
-      Delete File
-    </button>
-    <div
-      class="flex-1 min-w-0 bg-input text-primaryText border border-border text-sm rounded-md px-3 py-1.5 truncate"
-    >
-      {{ documentationFile?.name }}
-    </div>
-  </div>
+            <div
+              class="flex-1 min-w-0 bg-input text-primaryText border border-border text-sm rounded-md px-3 py-1.5 truncate"
+            >
+              No file chosen
+            </div>
+          </div>
 
-  <!-- Info Text -->
-  <div *ngIf="useDefaultDoc" class="text-sm text-secondaryText italic">
-    Using default documentation file.
-  </div>
-</div>
+          <div
+            *ngIf="!useDefaultDoc"
+            class="flex items-center space-x-3 mb-3"
+          >
+            <button
+              type="button"
+              (click)="deleteFile()"
+              class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-1.5 px-3 rounded-md transition duration-200"
+            >
+              Delete File
+            </button>
+            <div
+              class="flex-1 min-w-0 bg-input text-primaryText border border-border text-sm rounded-md px-3 py-1.5 truncate"
+            >
+              {{ documentationFile?.name }}
+            </div>
+          </div>
 
+          <div
+            *ngIf="useDefaultDoc"
+            class="text-sm text-secondaryText italic"
+          >
+            Using default documentation file.
+          </div>
+        </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-semibold text-secondaryText mb-1">API Key</label>
-            <input type="text" id="apiKey" [(ngModel)]="apiKey" name="apiKey" required
-              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-highlight" />
+            <label
+              class="block text-xs font-semibold text-secondaryText mb-1"
+              >API Key</label
+            >
+            <input
+              type="text"
+              id="apiKey"
+              [(ngModel)]="apiKey"
+              name="apiKey"
+              required
+              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-highlight"
+            />
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-secondaryText mb-1">API Key Type</label>
-            <select id="apiKeyType" [(ngModel)]="apiKeyType" name="apiKeyType"
-              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2">
+            <label
+              class="block text-xs font-semibold text-secondaryText mb-1"
+              >API Key Type</label
+            >
+            <select
+              id="apiKeyType"
+              [(ngModel)]="apiKeyType"
+              name="apiKeyType"
+              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2"
+            >
               <option value="OpenAI">OpenAI</option>
               <option value="Gemini">Gemini</option>
-            <option value="DeepSeek">DeepSeek</option>
+              <option value="DeepSeek">DeepSeek</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-secondaryText mb-1">Detail Level</label>
-            <select id="detailLevel" [(ngModel)]="detailLevel" name="detailLevel"
-              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2">
+            <label
+              class="block text-xs font-semibold text-secondaryText mb-1"
+              >Detail Level</label
+            >
+            <select
+              id="detailLevel"
+              [(ngModel)]="detailLevel"
+              name="detailLevel"
+              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2"
+            >
               <option value="Basic">Basic</option>
               <option value="Detailed">Detailed</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-secondaryText mb-1">Feature Type</label>
-            <select id="featureType" [(ngModel)]="featureType" name="featureType"
-              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2">
+            <label
+              class="block text-xs font-semibold text-secondaryText mb-1"
+              >Feature Type</label
+            >
+            <select
+              id="featureType"
+              [(ngModel)]="featureType"
+              name="featureType"
+              class="block w-full bg-input text-sm text-primaryText border border-border rounded-md p-2"
+            >
               <option value="Comments">Comments</option>
               <option value="Rename">Rename</option>
             </select>
@@ -127,31 +196,54 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-secondaryText mb-1">Code Snippet</label>
-          <textarea id="codeSnippet" [(ngModel)]="codeSnippet" name="codeSnippet" rows="10" required
+          <label
+            class="block text-xs font-semibold text-secondaryText mb-1"
+            >Code Snippet</label
+          >
+          <textarea
+            id="codeSnippet"
+            [(ngModel)]="codeSnippet"
+            name="codeSnippet"
+            rows="10"
+            required
             class="block w-full bg-code text-codeText font-mono text-sm border border-border rounded-md p-3 leading-relaxed resize-none shadow-inner"
-            placeholder="// Paste your code here..."></textarea>
+            placeholder="// Paste your code here..."
+          ></textarea>
         </div>
 
-        <button type="submit" [disabled]="loading"
-          class="w-full bg-highlight text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 hover:shadow-md transition-all disabled:opacity-50">
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="w-full text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out
+                 bg-[length:200%_auto] bg-gradient-primary bg-[position:0%_0]
+                 hover:bg-[position:100%_0] hover:shadow-md disabled:opacity-50"
+        >
           Submit
         </button>
 
-        <div *ngIf="loading" class="text-center text-highlight font-medium">⏳ Processing...</div>
-        <div *ngIf="error" class="text-center text-red-400 font-medium">{{ error }}</div>
+        <div
+          *ngIf="loading"
+          class="text-center text-highlight font-medium"
+        >
+          ⏳ Processing...
+        </div>
+        <div *ngIf="error" class="text-center text-red-400 font-medium">
+          {{ error }}
+        </div>
       </form>
 
       <!-- Output Section -->
       <div class="bg-surface border border-border p-6 rounded-2xl shadow-md">
-  <h3 class="text-sm font-bold text-highlight mb-1">🧾 Modified Code:</h3>
-  <pre
-    class="whitespace-pre-wrap text-sm text-codeText bg-code p-4 border border-border rounded-md overflow-auto leading-relaxed shadow-inner fade-in h-[650px]"
-  >
-    {{ result }}
-  </pre>
-</div>
-
+        <h3 class="text-sm font-bold bg-gradient-primary bg-clip-text text-transparent mb-1">
+          Modified Code:
+        </h3>
+        <pre
+          class="whitespace-pre-wrap text-sm text-codeText bg-code p-4 border border-border rounded-md overflow-auto leading-relaxed shadow-inner fade-in h-[650px]"
+        >
+{{ result }}
+        </pre>
+      </div>
     </div>
   </main>
 </div>

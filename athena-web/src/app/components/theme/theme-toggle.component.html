@@ -1,0 +1,16 @@
+<div
+  class="w-16 h-8 rounded-full cursor-pointer transition-colors duration-300 border border-border bg-surface flex items-center justify-start px-1"
+  (click)="toggleTheme()"
+>
+  <div
+    class="w-6 h-6 rounded-full bg-theme dark:bg-darkTheme text-primaryText dark:text-darkPrimaryText flex items-center justify-center transition-all duration-300 transform"
+    [ngClass]="{
+      'translate-x-8': currentTheme === 'dark',
+      'translate-x-0': currentTheme === 'light'
+    }"
+  >
+    <i
+      class="{{ currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun' }} text-xs leading-none relative top-[0.5px]"
+    ></i>
+  </div>
+</div>

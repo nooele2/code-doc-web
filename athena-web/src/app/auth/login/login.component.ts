@@ -3,13 +3,14 @@ import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { ThemeToggleComponent } from '../../components/theme/theme-toggle.component';
 
 @Component({
-    selector: 'app-login',
-    standalone: true,
-    imports: [FormsModule, CommonModule],
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
+  selector: 'app-login',
+  standalone: true,
+  imports: [FormsModule, CommonModule, ThemeToggleComponent],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   email: string = '';
@@ -23,10 +24,13 @@ export class LoginComponent {
       .login(this.email, this.password)
       .then(() => {
         console.log('Login successful');
-          this.router.navigate(['/intro']);
+        this.router.navigate(['/intro']);
       })
       .catch((error) => {
         this.errorMessage = error.message;
       });
   }
 }
+
+
+

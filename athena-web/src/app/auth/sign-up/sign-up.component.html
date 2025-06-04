@@ -1,13 +1,16 @@
 <div class="flex h-screen bg-background text-primaryText font-[JetBrains Mono,monospace]">
+  <!-- Theme Toggle Button -->
+  <app-theme-toggle class="absolute top-4 right-4 z-10"></app-theme-toggle>
+  
   <!-- Left Info Section -->
   <aside class="hidden lg:flex flex-col justify-center items-start w-1/2 bg-surface border-r border-border p-12 shadow-md">
-    <h2 class="text-4xl font-bold text-highlight leading-snug mb-4">
+    <h2 class="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-snug mb-4">
       Welcome to<br>Athena
     </h2>
     <div class="h-px bg-border w-full my-4"></div>
     <p class="text-secondaryText text-sm">
       If you already have an account,<br>
-      you can <a class="text-highlight hover:underline" href="/login">log in here</a>.
+      you can <a class="bg-gradient-primary bg-clip-text text-transparent" href="/login">log in here</a>.
     </p>
     <img src="/imgs/signup-login-ui.png" alt="Login Illustration" class="mt-10 w-full max-w-md rounded-xl shadow-lg" />
   </aside>
@@ -15,7 +18,7 @@
   <!-- Sign Up Form Section -->
   <main class="flex-1 flex items-center justify-center bg-background p-6">
     <div class="bg-surface border border-border rounded-2xl p-8 shadow-lg w-full max-w-md">
-      <h2 class="text-3xl font-bold text-highlight text-center mb-6">Sign Up</h2>
+      <h2 class="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent text-center mb-6">Sign Up</h2>
       <form (ngSubmit)="onSignUp()" #loginForm="ngForm" class="space-y-6">
         <!-- Email -->
         <div>
@@ -55,7 +58,8 @@
         <button
           type="submit"
           [disabled]="loginForm.invalid"
-          class="w-full bg-highlight text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 hover:shadow-md transition-all disabled:opacity-50"
+          class="w-full bg-highlight text-white font-bold py-2 px-4 rounded-lg bg-[length:200%_auto] bg-gradient-primary bg-[position:0%_0] hover:bg-[position:100%_0]
+                   transition-all duration-300 ease-in-out"
         >
           Sign Up
         </button>

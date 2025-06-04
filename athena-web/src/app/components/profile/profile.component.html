@@ -1,0 +1,130 @@
+<div class="relative inline-block text-left">
+  <!-- Profile Icon -->
+  <div (click)="toggleMenu()" class="cursor-pointer text-3xl">
+    <i
+      class="fas fa-user-circle bg-[length:200%_auto] bg-gradient-primary bg-[position:0%_0] hover:bg-[position:100%_0]
+             transition-all duration-300 ease-in-out bg-clip-text text-transparent"
+    ></i>
+  </div>
+
+  <!-- Dropdown Menu -->
+  <div
+    *ngIf="menuVisible"
+    class="origin-top-right absolute right-0 mt-2 w-40 rounded-xl shadow-lg bg-surface dark:bg-darkSurface ring-1 ring-border dark:ring-darkBorder focus:outline-none z-50"
+  >
+    <ul class="divide-y divide-border dark:divide-darkBorder">
+      <li
+        *ngFor="let menuItem of menuItems; let i = index"
+        (click)="onMenuClick(menuItem)"
+        class="flex items-center gap-2 px-3 py-2 text-sm text-primaryText dark:text-darkPrimaryText transition cursor-pointer hover:bg-highlight"
+        [ngClass]="{
+          'rounded-t-xl': i === 0,
+          'rounded-b-xl': i === menuItems.length - 1
+        }"
+      >
+        <i [class]="menuItem.icon"></i>
+        {{ menuItem.label }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Profile Modal -->
+  <div
+    *ngIf="isProfileModalVisible"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div class="bg-surface dark:bg-darkSurface rounded-2xl p-6 w-96 max-w-full shadow-lg relative">
+      <h2 class="text-xl font-semibold mb-4 bg-gradient-primary bg-clip-text text-transparent">Profile</h2>
+      <form (ngSubmit)="saveProfile()" #profileForm="ngForm" class="space-y-4">
+        <div>
+          <label
+            for="name"
+            class="block text-sm font-medium text-primaryText dark:text-darkPrimaryText mb-1"
+            >Username</label
+          >
+          <input
+            id="name"
+            name="name"
+            type="text"
+            [(ngModel)]="userProfile.name"
+            required
+            class="w-full bg-input dark:bg-darkInput text-primaryText dark:text-darkPrimaryText rounded-md border border-border dark:border-darkBorder p-2 focus:outline-none focus:ring-2 focus:ring-highlight"
+          />
+        </div>
+
+        <div>
+          <label
+            for="email"
+            class="block text-sm font-medium text-primaryText dark:text-darkPrimaryText mb-1"
+            >Email</label
+          >
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [(ngModel)]="userProfile.email"
+            disabled
+            class="w-full bg-input dark:bg-darkInput text-primaryText dark:text-darkPrimaryText rounded-md border border-border dark:border-darkBorder p-2 cursor-not-allowed"
+          />
+        </div>
+
+        <div>
+          <label
+            for="password"
+            class="block text-sm font-medium text-primaryText dark:text-darkPrimaryText mb-1"
+            >New Password</label
+          >
+          <input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="userProfile.password"
+            placeholder="New Password"
+            class="w-full bg-input dark:bg-darkInput text-primaryText dark:text-darkPrimaryText rounded-md border border-border dark:border-darkBorder p-2 focus:outline-none focus:ring-2 focus:ring-highlight"
+          />
+        </div>
+
+        <div class="flex justify-end space-x-4 pt-4 border-t border-border dark:border-darkBorder">
+          <button
+            type="button"
+            (click)="closeProfileModal()"
+            class="px-4 py-2 rounded-md bg-border dark:bg-darkBorder text-primaryText dark:text-darkPrimaryText hover:bg-red-700 hover:text-white transition"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            [disabled]="profileForm.invalid"
+            class="px-4 py-2 rounded-md bg-[length:200%_auto] bg-gradient-primary bg-[position:0%_0] hover:bg-[position:100%_0]
+                   transition-all duration-300 ease-in-out text-white font-semibold disabled:opacity-50"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div
+    *ngIf="isSettingsModalVisible"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  >
+    <div
+      class="bg-surface dark:bg-darkSurface rounded-2xl p-6 w-96 max-w-full shadow-lg relative overflow-auto max-h-[80vh]"
+    >
+      <h2 class="text-xl font-semibold mb-4 text-highlight dark:text-highlight">Privacy and Policy</h2>
+      <div class="prose prose-invert max-w-none overflow-auto" style="max-height: 60vh;">
+        <!-- Your privacy content here -->
+      </div>
+
+      <button
+        type="button"
+        (click)="closeSettingsModal()"
+        class="mt-6 px-4 py-2 rounded-md bg-highlight text-white hover:bg-blue-700 transition"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

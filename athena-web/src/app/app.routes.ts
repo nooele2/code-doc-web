@@ -4,9 +4,9 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { CodeProcessorComponent } from './code-processor/code-processor.component';
 
 export const routes: Routes = [
-  { path: 'intro', component: CodeProcessorComponent },
+  { path: 'home', component: CodeProcessorComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent},
-  { path: '', redirectTo: '/intro', pathMatch: 'full' },
-  { path: '**', redirectTo: '/intro' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' },
 ];

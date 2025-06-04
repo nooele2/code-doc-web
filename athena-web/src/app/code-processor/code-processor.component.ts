@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ProfileComponent } from '../component/profile/profile.component';
-import { HistoryComponent } from '../component/history/history.component';
+import { ProfileComponent } from '../components/profile/profile.component';
+import { HistoryComponent } from '../components/history/history.component';
+import { ThemeToggleComponent } from '../components/theme/theme-toggle.component';
 
 @Component({
   selector: 'app-code-processor',
   standalone: true,
-  imports: [CommonModule, FormsModule, ProfileComponent, HistoryComponent],
+  imports: [CommonModule, FormsModule, ProfileComponent, HistoryComponent, ThemeToggleComponent],
   templateUrl: './code-processor.component.html',
 })
 export class CodeProcessorComponent {

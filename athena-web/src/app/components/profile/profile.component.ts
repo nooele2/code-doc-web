@@ -6,11 +6,11 @@ import { Auth, updatePassword, reauthenticateWithCredential, EmailAuthProvider }
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-profile',
-    standalone: true,
-    imports: [FormsModule, CommonModule],
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css']
+  selector: 'app-profile',
+  standalone: true,
+  imports: [FormsModule, CommonModule],
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   menuVisible = false;
@@ -21,22 +21,20 @@ export class ProfileComponent implements OnInit {
     name: '',
     email: '',
     apiKey: '',
-    password: '', // New password field
+    password: '',
   };
 
-  menuItems = [
-    { icon: 'fa fa-user', label: 'View Profile', action: 'viewProfile' },
-    { icon: 'fa fa-cog', label: 'Settings', action: 'settings' },
-    { icon: 'fa fa-sign-out', label: 'Logout', action: 'logout' },
-  ];
+  menuItems: { icon: string; label: string; action: string }[] = [];
 
   constructor(
     private userService: UserService,
-    private auth: Auth, // Inject AngularFire Auth
+    private auth: Auth,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.updateMenuItems();
+
     this.userService.currentUser$.subscribe((user) => {
       if (user && user.uid) {
         this.userService.getUserData(user.uid).subscribe((userData) => {
@@ -63,7 +61,6 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    // Update user profile
     this.userService
       .updateUser({ name, apiKey })
       .then(() => alert('Profile updated successfully!'))
@@ -72,7 +69,6 @@ export class ProfileComponent implements OnInit {
         alert('Failed to update profile.');
       });
 
-    // Update password
     if (password) {
       const currentPassword = prompt('Enter current password to update password:');
       if (!currentPassword) {
@@ -92,6 +88,15 @@ export class ProfileComponent implements OnInit {
 
     this.closeProfileModal();
   }
+  updateMenuItems() {
+
+    this.menuItems = [
+      { icon: 'fa fa-user', label: 'View Profile', action: 'viewProfile' },
+      { icon: 'fa fa-cog', label: 'Settings', action: 'settings' },
+      { icon: 'fa fa-download', label: 'Get Extension', action: 'getExtension' },
+      { icon: 'fa fa-sign-out', label: 'Logout', action: 'logout' },
+    ];
+  }
 
   onMenuClick(menuItem: { label: string; action: string }) {
     this.menuVisible = false;
@@ -100,15 +105,18 @@ export class ProfileComponent implements OnInit {
       case 'viewProfile':
         this.isProfileModalVisible = true;
         break;
-
       case 'settings':
         this.isSettingsModalVisible = true;
         break;
-
+      case 'getExtension':
+        window.open(
+          'https://marketplace.visualstudio.com/items?itemName=FoodokuAthena.code-documentation',
+          '_blank'
+        );
+        break;
       case 'logout':
         this.auth.signOut().then(() => this.router.navigate(['/login']));
         break;
-
       default:
         console.log(`Unknown action: ${menuItem.action}`);
     }
